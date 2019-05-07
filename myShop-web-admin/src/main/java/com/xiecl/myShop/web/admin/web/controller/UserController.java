@@ -4,6 +4,7 @@ import com.sun.org.apache.regexp.internal.RE;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.xiecl.myShop.commons.constans.ConstansUtil;
 import com.xiecl.myShop.commons.dto.BaseResult;
+import com.xiecl.myShop.commons.dto.UserPage;
 import com.xiecl.myShop.domain.TbUser;
 import com.xiecl.myShop.web.admin.service.TbUserService;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
@@ -30,12 +32,14 @@ public class UserController {
 
     @RequestMapping("/list")
     public String queryList(HttpServletRequest request, Model model){
-//        List<TbUser> list=userService.selectAll();
-//        if(null!=list||list.size()>0){
-//           model.addAttribute("users",list);
-//        }
         return "userlist";
     }
+
+    /**进入添加用户或编辑用户界面数据准备
+     * @param request
+     * @param mode
+     * @return
+     */
     @RequestMapping(value = "/userfrom",method = RequestMethod.GET)
     public String userFrom(HttpServletRequest request, Model mode){
         String userid=request.getParameter("id");
@@ -48,6 +52,12 @@ public class UserController {
         return "userfrom";
     }
 
+    /**添加用户
+     * @param tbUser
+     * @param model
+     * @param redirectAttributes
+     * @return
+     */
     @RequestMapping(value = "/saveUser",method = RequestMethod.POST)
     public String saveUser(TbUser tbUser, Model model, RedirectAttributes redirectAttributes){
         BaseResult result = userService.saveUser(tbUser);
@@ -62,6 +72,11 @@ public class UserController {
         }
 
     }
+
+    /**批量删除用户
+     * @param ids
+     * @return
+     */
     @RequestMapping(value = "/removeUser")
     @ResponseBody
     public BaseResult removeUser(@RequestParam(name = "ids[]") String[] ids){
@@ -83,18 +98,76 @@ public class UserController {
         }
         return result;
     }
+
+
+    /**删除单个用户
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/deleteUser")
     @ResponseBody
-    @RequestMapping(value="/gotopage")
-    public Map<String,Object> gotoPage(HttpServletRequest request){
+    public BaseResult deleteUser(@RequestParam(name = "id") String id){
+        BaseResult result=new BaseResult();
+
+        if(id==null){
+            result.setStatus(ConstansUtil.RESULT_CODE_ERROR);
+            result.setMessage(ConstansUtil.RESULT_MESSAGE_REMOVE_ERROR);
+        }
+        else {
+            TbUser user=new TbUser();
+            user.setId(id);
+            userService.deleteUser(user);
+            result.setStatus(ConstansUtil.RESULT_CODE_SUCCESS);
+            result.setMessage(ConstansUtil.RESULT_MESSAGE_DELETE_SUCCESS);
+        }
+        return result;
+    }
+
+
+//    /**页面分页加载
+//     * @param request
+//     * @return
+//     */
+//    @ResponseBody
+//    @RequestMapping(value="/gotopage")
+//    public UserPage gotoPage(HttpServletRequest request){
+//        String strdraw=request.getParameter("draw");
+//        String strstart=request.getParameter("start");
+//        String strlength=request.getParameter("length");
+//        int draw = StringUtils.isBlank(strdraw)?0: Integer.parseInt(strdraw);
+//        int start = StringUtils.isBlank(strstart)?0: Integer.parseInt(strstart);
+//        int length = StringUtils.isBlank(strlength)?0: Integer.parseInt(strlength);
+//        UserPage page = userService.gotoPage(start, length);
+//        HttpSession session=request.getSession();
+//        session.setAttribute("test","1");
+//        page.setDraw(draw);
+//        page.setError("");
+//        return   page;
+//   }
+
+    /**搜索分页加载
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="/serachGotopage")
+    public UserPage serachGotoPage(HttpServletRequest request){
         String strdraw=request.getParameter("draw");
         String strstart=request.getParameter("start");
         String strlength=request.getParameter("length");
+        String serachValue=request.getParameter("serachValue");
         int draw = StringUtils.isBlank(strdraw)?0: Integer.parseInt(strdraw);
         int start = StringUtils.isBlank(strstart)?0: Integer.parseInt(strstart);
         int length = StringUtils.isBlank(strlength)?0: Integer.parseInt(strlength);
-        Map<String, Object> map = userService.gotoPage(start, length);
-        map.put("draw",draw);
-        map.put("error","");
-        return map;
+        UserPage page=new UserPage();
+        if(StringUtils.isBlank(serachValue)) {
+             page = userService.gotoPage(start, length);
+        }else{
+             page = userService.serachgopage(start,length,serachValue);
+        }
+        page.setDraw(draw);
+        page.setError("");
+
+        return  page;
     }
 }

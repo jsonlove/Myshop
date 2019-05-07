@@ -15,4 +15,5 @@ public class ConstansUtil {
     public static final int RESULT_CODE_ERROR=500;
     public static final String RESULT_MESSAGE_REMOVE_ERROR="删除失败";
     public static final String RESULT_MESSAGE_REMOVE_SUCCESS="删除成功，删除了%s条数据";
+    public static final String RESULT_MESSAGE_DELETE_SUCCESS="删除成功";
 }

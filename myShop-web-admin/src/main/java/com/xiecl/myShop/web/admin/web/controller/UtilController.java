@@ -9,6 +9,5 @@ public class UtilController {
     @RequestMapping("/error")
     public String errorPage(){
         return "error/500";
-
     }
 }

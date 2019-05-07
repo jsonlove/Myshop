@@ -32,7 +32,7 @@
                                     <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
 
                                     <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                        <button type="submit" onclick="search()" class="btn btn-default"><i class="fa fa-search"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -43,7 +43,7 @@
                         <a type="button" class="btn   btn-sm"><i class="fa fa-cloud-download"></i>导出</a>
                         <!-- /.box-header -->
                         <div class="box-body table-responsive mailbox-messages">
-                            <table id="example2" class="table table-hover table-striped">
+                            <table id="datatable" class="table table-hover table-striped">
                                 <thead>
                                     <tr>
                                         <th> <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
@@ -92,28 +92,36 @@
 </body>
 </html>
 <script>
+    var table=null;
+    //定义表格列数据
+    var _columns=[   {'data':function ( row, type, val, meta ) {
+                            return " <td  class=\"table-responsive mailbox-messages\"><input type=\"checkbox\"></td>"
+                        }
+                    },
+                        {'data':'id'},
+                        {'data':'username'},
+                        {'data':'email'},
+                        {'data':'phone'},
+                        {'data':'created'},
+                        {'data':function ( row, type, val, meta ) {
+                                return "<td>\n" +
+                                    "                <a type=\"button\" href=\"#\" class=\"btn btn-default btn-sm\"><i class=\"fa fa-search\"></i>查看</a>\n" +
+                                    "            <a type=\"button\" href=\"<%=request.getContextPath()%>/user/userfrom?id="+row.id+"\" class=\"btn btn-info btn-sm \"><i class=\"fa fa-edit\"></i>编辑</a>\n" +
+                                    "        <a type=\"button\" href=\"#\" onclick=\"deleteUser("+row.id+")\"  class=\"btn btn-danger btn-sm\"><i class=\"fa fa-trash\"></i>删除</a>\n" +
+                                    "        </td>"
+                            }}
+                    ];
+
+
     $(function () {
-        var _columns=[   {'data':function ( row, type, val, meta ) {
-                return " <td  class=\"table-responsive mailbox-messages\"><input type=\"checkbox\"></td>"
-            }
-        },
-            {'data':'id'},
-            {'data':'username'},
-            {'data':'email'},
-            {'data':'phone'},
-            {'data':'created'},
-            {'data':function ( row, type, val, meta ) {
-                    return "<td>\n" +
-                        "                <a type=\"button\" href=\"#\" class=\"btn btn-default btn-sm\"><i class=\"fa fa-search\"></i>查看</a>\n" +
-                        "            <a type=\"button\" href=\"<%=request.getContextPath()%>/user/userfrom?id=${user.id}\" class=\"btn btn-info btn-sm \"><i class=\"fa fa-edit\"></i>编辑</a>\n" +
-                        "        <a type=\"button\" href=\"#\" class=\"btn btn-danger btn-sm\"><i class=\"fa fa-trash\"></i>删除</a>\n" +
-                        "        </td>"
-                }}
-        ];
-        App.initdatatable("<%=request.getContextPath()%>/user/gotopage",_columns);
+        //进行加载 app.js
+        // var serachValue=$("input[name='table_search']").val();
+        if(table==null){table=App.initdatatable("<%=request.getContextPath()%>/user/serachGotopage",_columns);}
 
     });
 
+
+    //批量删除用户
     $('.my-remove').click(function () {
         var checks=new Array();
         $('.mailbox-messages input[type="checkbox"]').each(function (i) {
@@ -131,4 +139,20 @@
             location.reload();
         })
     });
+
+
+    //删除单个用户
+    function deleteUser(id) {
+        $.post("<%=request.getContextPath()%>/user/deleteUser",{"id":id},function (data) {
+            alert(data.message);
+            location.reload();
+        });
+    }
+    //搜索分页查询
+    function search() {
+        var param={"serachValue":$("input[name='table_search']").val()};
+        console.log(table);
+        table.settings()[0].ajax.data = param;
+        table.ajax.reload();
+    }
 </script>

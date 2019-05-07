@@ -29,7 +29,6 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-
                 <form class="form-horizontal" action="<%=request.getContextPath()%>/user/saveUser" method="post">
                     <div class="box-body">
                         <div class="alert ${result.status==500?"alert-danger":"alert-success"} alert-dismissible" >

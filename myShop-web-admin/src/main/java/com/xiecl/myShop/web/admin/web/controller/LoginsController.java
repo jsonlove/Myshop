@@ -29,7 +29,7 @@ public class LoginsController {
         TbUser user=new TbUser();
         user.setEmail(email);
         user.setPassword(password);
-        user = userService.selectUserByNameAndPwd(user);
+        user = userService.selectUserByEmailandPassword(user);
         if(user!=null){
             request.getSession().setAttribute(ConstansUtil.SESSION_USER,user);
             return "redirect:/home";

@@ -28,9 +28,18 @@ public interface TbUserDao {
     /**
      * 根据用户名和密码查询用户
      */
-    public TbUser selectUserByNameAndPwd(TbUser user);
-
+    public TbUser selectUserByEmaill(TbUser user);
+    /**
+     * 分页查询所有用户
+     */
     public List<TbUser> selectLimit(Map params);
-
+    /**
+     * 查询用户总数
+     */
     public int selectCount();
+    /**
+     * 分页查询符合条件用户
+     */
+    public List<TbUser> serachLimit(Map params);
+
 }

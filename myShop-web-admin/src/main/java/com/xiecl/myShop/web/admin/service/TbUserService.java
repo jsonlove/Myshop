@@ -1,6 +1,7 @@
 package com.xiecl.myShop.web.admin.service;
 
 import com.xiecl.myShop.commons.dto.BaseResult;
+import com.xiecl.myShop.commons.dto.UserPage;
 import com.xiecl.myShop.domain.TbUser;
 
 import java.util.List;
@@ -31,10 +32,14 @@ public interface TbUserService {
     /**
      * 根据用户名和密码查询用户
      */
-    public TbUser selectUserByNameAndPwd(TbUser user);
+    public TbUser selectUserByEmailandPassword(TbUser user);
 
     /**
      * 取得分页信息
      */
-    public Map<String,Object> gotoPage(int start, int length);
+    public UserPage gotoPage(int start, int length);
+    /**
+     * 取得搜索分页信息
+     */
+    public UserPage serachgopage(int start, int length,String serachValue);
 }

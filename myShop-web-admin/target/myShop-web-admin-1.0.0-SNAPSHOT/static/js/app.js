@@ -21,7 +21,7 @@ var App=function () {
 
 
     var handlerDataTable = function (url,_columns) {
-        $('#example2').DataTable({
+        var _datatable=$('#datatable').DataTable({
             'paging'      : true,
             'lengthChange': false,
             'searching'   : false,
@@ -64,14 +64,16 @@ var App=function () {
             },
 
         });
+        return _datatable;
     };
+
 
     return{
         initCheckbox:function () {
             handlerIcheck();
         },
         initdatatable:function (url,_columns) {
-            handlerDataTable(url,_columns);
+           return handlerDataTable(url,_columns);
         }
     }
 

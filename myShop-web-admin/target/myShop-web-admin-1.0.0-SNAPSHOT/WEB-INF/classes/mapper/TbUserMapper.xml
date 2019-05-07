@@ -21,7 +21,7 @@
         FROM tb_user AS tbuser
         WHERE tbuser.id=#{id}
     </select>
-    <select id="selectUserByNameAndPwd" resultType="TbUser">
+    <select id="selectUserByEmaill" resultType="TbUser">
         SELECT
         <include refid="tbuserColumn"></include>
         FROM tb_user AS tbuser
@@ -72,6 +72,14 @@ INSERT INTO `myshop`.`tb_user`
         <include refid="tbuserColumn"></include>
         FROM tb_user AS tbuser
         limit #{start},#{length}
+    </select>
+
+    <select id="serachLimit" resultType="TbUser" parameterType="java.util.Map">
+        select
+        <include refid="tbuserColumn"></include>
+        FROM tb_user AS tbuser
+        WHERE username LIKE CONCAT('%',#{serachValue},'%')
+        LIMIT #{start},#{length}
     </select>
 
     <select id="selectCount" resultType="java.lang.Integer">

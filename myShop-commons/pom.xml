@@ -50,6 +50,18 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>jcl-over-slf4j</artifactId>
             </dependency>
+            <dependency>
+                <groupId>com.xiecl.myShop</groupId>
+                <artifactId>myShop-domain</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.xiecl.myShop</groupId>
+                <artifactId>myShop-domain</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+                <scope>compile</scope>
+            </dependency>
         </dependencies>
 
 

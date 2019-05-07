@@ -1,6 +1,7 @@
 package com.xiecl.myShop.web.admin.service.impl;
 
 import com.xiecl.myShop.commons.dto.BaseResult;
+import com.xiecl.myShop.commons.dto.UserPage;
 import com.xiecl.myShop.domain.TbUser;
 import com.xiecl.myShop.web.admin.dao.TbUserDao;
 import com.xiecl.myShop.web.admin.service.TbUserService;
@@ -58,8 +59,8 @@ public class TbUserServiceImpl implements TbUserService {
     }
 
     @Override
-    public TbUser selectUserByNameAndPwd(TbUser user) {
-        TbUser tbUser=tbuserDao.selectUserByNameAndPwd(user);
+    public TbUser selectUserByEmailandPassword(TbUser user) {
+        TbUser tbUser=tbuserDao.selectUserByEmaill(user);
         if(null!=tbUser&&tbUser.getPassword().equals(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()))){
             return tbUser;
         }else{
@@ -83,16 +84,30 @@ public class TbUserServiceImpl implements TbUserService {
         return BaseResult.success();
     }
 
-    public Map<String,Object> gotoPage(int start,int length){
+    public UserPage gotoPage(int start, int length){
         Map<String,Integer> param=new HashMap();
-        Map<String,Object> returnparam=new HashMap();
+       UserPage page=new UserPage();
         param.put("start",start);
         param.put("length",length);
         List<TbUser> tbUsers = tbuserDao.selectLimit(param);
         int count = tbuserDao.selectCount();
-        returnparam.put("data",tbUsers);
-       returnparam.put("recordsTotal",count);
-       returnparam.put("recordsFiltered",count);
-        return returnparam;
+        page.setData(tbUsers);
+        page.setRecordsTotal(count);
+        page.setRecordsFiltered(tbUsers.size());
+        return page;
+    }
+
+    public UserPage serachgopage(int start, int length,String serachValue){
+        Map<String,Object> param=new HashMap();
+        UserPage page=new UserPage();
+        param.put("start",start);
+        param.put("length",length);
+        param.put("serachValue",serachValue);
+        List<TbUser> tbUsers = tbuserDao.serachLimit(param);
+        int count = tbuserDao.selectCount();
+        page.setData(tbUsers);
+        page.setRecordsTotal(count);
+        page.setRecordsFiltered(tbUsers.size());
+        return page;
     }
 }
