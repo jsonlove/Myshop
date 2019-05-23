@@ -23,14 +23,14 @@ public class TbUserServiceTest {
     }
     @Test
     public void insertUser(){
-        TbUser user1=new TbUser("xiecl1","123456","152436121241","75231@qq.com",new Date(),new Date());
-        user1.setPassword(user1.getPassword());
-        service.saveUser(user1);
+//        TbUser user1=new TbUser("xiecl1","123456","152436121241","75231@qq.com",new Date(),new Date());
+//        user1.setPassword(user1.getPassword());
+//        service.saveUser(user1);
     };
     @Test
     public void updateUser(){
-        TbUser user1=new TbUser("xiecl", DigestUtils.md5DigestAsHex("123456".getBytes()),"15243612124","7523@qq.com",new Date(),new Date());
-        service.updateUser(user1);
+//        TbUser user1=new TbUser("xiecl", DigestUtils.md5DigestAsHex("123456".getBytes()),"15243612124","7523@qq.com",new Date(),new Date());
+//        service.updateUser(user1);
     };
     @Test
     public void selectUserByid(){

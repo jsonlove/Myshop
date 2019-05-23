@@ -1,7 +1,5 @@
 package com.xiecl.myShop.web.admin.web.controller;
 
-import com.sun.org.apache.regexp.internal.RE;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.xiecl.myShop.commons.constans.ConstansUtil;
 import com.xiecl.myShop.commons.dto.BaseResult;
 import com.xiecl.myShop.commons.dto.UserPage;
@@ -17,12 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("user")
@@ -32,7 +25,7 @@ public class UserController {
 
     @RequestMapping("/list")
     public String queryList(HttpServletRequest request, Model model){
-        return "userlist";
+        return "user/userlist";
     }
 
     /**进入添加用户或编辑用户界面数据准备
@@ -49,7 +42,7 @@ public class UserController {
             user=userService.selectUserByid(user);
             mode.addAttribute("tbuser",user);
         }
-        return "userfrom";
+        return "user/userfrom";
     }
 
     /**添加用户
@@ -68,7 +61,7 @@ public class UserController {
         else{
             System.out.println(result.getMessage());
             model.addAttribute("result",result);
-            return "/userfrom";
+            return "user/userfrom";
         }
 
     }

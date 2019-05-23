@@ -27,6 +27,18 @@
                     <li><a href="<%=request.getContextPath() %>/user/userfrom"><i class="fa fa-circle-o"></i>添加用户</a></li>
                 </ul>
             </li>
+            <li class="active treeview">
+                <a href="#">
+                    <i class="fa  fa-book"></i> <span>内容管理</span>
+                    <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="<%=request.getContextPath() %>/content/content_categorylist"><i class="fa fa-circle-o"></i>分类管理</a></li>
+                    <li><a href="<%=request.getContextPath() %>/content/contentlist"><i class="fa fa-circle-o"></i>内容列表</a></li>
+                </ul>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->

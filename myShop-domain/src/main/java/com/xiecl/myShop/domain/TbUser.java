@@ -3,34 +3,16 @@ package com.xiecl.myShop.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-public class TbUser implements Serializable {
-    private String id;
+public class TbUser extends BaseBean {
     private String username;
     private String password;
     private String phone;
     private String email;
-    private Date created;
-    private Date updated;
 
-    public TbUser( String username, String password, String phone, String email, Date created, Date updated) {
-        this.username = username;
-        this.password = password;
-        this.phone = phone;
-        this.email = email;
-        this.created = created;
-        this.updated = updated;
-    }
 
     public TbUser() {
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;
@@ -64,19 +46,4 @@ public class TbUser implements Serializable {
         this.email = email;
     }
 
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
 }

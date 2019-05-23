@@ -2,6 +2,7 @@ package com.xiecl.myShop.web.admin.service.impl;
 
 import com.xiecl.myShop.commons.dto.BaseResult;
 import com.xiecl.myShop.commons.dto.UserPage;
+import com.xiecl.myShop.commons.util.DateUtil;
 import com.xiecl.myShop.domain.TbUser;
 import com.xiecl.myShop.web.admin.dao.TbUserDao;
 import com.xiecl.myShop.web.admin.service.TbUserService;
@@ -30,9 +31,9 @@ public class TbUserServiceImpl implements TbUserService {
         BaseResult result=checkUser(user);
         if(result.getStatus()==200) {
             if(null == user.getId()){
-                user.setCreated(new Date());
+                user.setCreated(DateUtil.dateToStrFormat(new Date()));
                 user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
-                user.setUpdated(new Date());
+                user.setUpdated(DateUtil.dateToStrFormat(new Date()));
                 tbuserDao.insertUser(user);
             }
             else{

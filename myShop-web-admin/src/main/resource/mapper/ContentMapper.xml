@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiecl.myShop.web.admin.dao.ContentDao">
+    <sql id="contentcolumn">
+            ct.id,
+        	ct.category_id as categoryid,
+            ct.title,
+            ct.sub_title as subtitle,
+            ct.title_desc as titledesc,
+            ct.url,
+            ct.pic,
+            ct.pic2,
+            ct.content,
+            ct.created,
+            ct.updated
+    </sql>
+
+    <select id="selectCotentLimit" resultType="Content" parameterType="java.util.Map">
+          SELECT
+            <include refid="contentcolumn"></include>
+            FROM
+            tb_content as ct
+            LIMIT #{start}, #{length};
+    </select>
+
+    <select id="serachLimit" resultType="Content" parameterType="java.util.Map">
+        SELECT
+        <include refid="contentcolumn"></include>
+        FROM
+        tb_content as ct
+        where ct.title like CONCAT('%',#{serachValue},'%')
+        LIMIT #{start}, #{length};
+    </select>
+
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(ct.id)
+        FROM
+        tb_content as ct
+    </select>
+
+    <select id="selectByid" resultType="Content">
+        SELECT
+	      <include refid="contentcolumn"></include>
+	FROM
+	tb_content AS ct
+	WHERE ct.id=#{countid}
+    </select>
+</mapper>
