@@ -9,10 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +30,7 @@ public class UserController {
      * @param mode
      * @return
      */
-    @RequestMapping(value = "/userfrom",method = RequestMethod.GET)
+    @GetMapping("/userfrom")
     public String userFrom(HttpServletRequest request, Model mode){
         String userid=request.getParameter("id");
         if(userid!=null){
@@ -53,17 +50,8 @@ public class UserController {
      */
     @RequestMapping(value = "/saveUser",method = RequestMethod.POST)
     public String saveUser(TbUser tbUser, Model model, RedirectAttributes redirectAttributes){
-        BaseResult result = userService.saveUser(tbUser);
-        if(result.getStatus()==200){
-            redirectAttributes.addFlashAttribute("result",result);
-            return "redirect:/user/list";
-        }
-        else{
-            System.out.println(result.getMessage());
-            model.addAttribute("result",result);
-            return "user/userfrom";
-        }
-
+            userService.saveUser(tbUser);
+                return "redirect:/user/list";
     }
 
     /**批量删除用户
@@ -117,26 +105,6 @@ public class UserController {
     }
 
 
-//    /**页面分页加载
-//     * @param request
-//     * @return
-//     */
-//    @ResponseBody
-//    @RequestMapping(value="/gotopage")
-//    public UserPage gotoPage(HttpServletRequest request){
-//        String strdraw=request.getParameter("draw");
-//        String strstart=request.getParameter("start");
-//        String strlength=request.getParameter("length");
-//        int draw = StringUtils.isBlank(strdraw)?0: Integer.parseInt(strdraw);
-//        int start = StringUtils.isBlank(strstart)?0: Integer.parseInt(strstart);
-//        int length = StringUtils.isBlank(strlength)?0: Integer.parseInt(strlength);
-//        UserPage page = userService.gotoPage(start, length);
-//        HttpSession session=request.getSession();
-//        session.setAttribute("test","1");
-//        page.setDraw(draw);
-//        page.setError("");
-//        return   page;
-//   }
 
     /**搜索分页加载
      * @param request

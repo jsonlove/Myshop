@@ -2,20 +2,14 @@ package com.xiecl.myShop.web.admin.service.impl;
 
 import com.xiecl.myShop.commons.dto.ContentPage;
 import com.xiecl.myShop.commons.dto.ContentResult;
-import com.xiecl.myShop.commons.dto.UserPage;
-import com.xiecl.myShop.commons.util.DateUtil;
 import com.xiecl.myShop.domain.Content;
 import com.xiecl.myShop.domain.ContentCategory;
-import com.xiecl.myShop.domain.TbUser;
 import com.xiecl.myShop.web.admin.dao.ContentCategoryDao;
 import com.xiecl.myShop.web.admin.dao.ContentDao;
-import com.xiecl.myShop.web.admin.service.ContentCategoryService;
 import com.xiecl.myShop.web.admin.service.ContentService;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,19 +20,20 @@ public class ContentServiceImpl implements ContentService {
     private ContentDao dao;
     @Autowired
     private ContentCategoryDao categorydao;
+    @Override
     public ContentPage gotoPage(int start, int length){
         Map<String,Integer> param=new HashMap();
         ContentPage page=new ContentPage();
         param.put("start",start);
         param.put("length",length);
-        List<Content> contents = dao.selectCotentLimit(param);
+        List<Content> contents = dao.selectLimit(param);
         int count = dao.selectCount();
         page.setData(contents);
         page.setRecordsTotal(count);
         page.setRecordsFiltered(contents.size());
         return page;
     }
-
+    @Override
     public ContentPage serachgopage(int start, int length,String serachValue){
         Map<String,Object> param=new HashMap();
         ContentPage page=new ContentPage();
@@ -52,7 +47,7 @@ public class ContentServiceImpl implements ContentService {
         page.setRecordsFiltered(contents.size());
         return page;
     }
-
+    @Override
     public ContentResult selectByid(String countid){
         Content content = dao.selectByid(countid);
         ContentCategory contentCategory = categorydao.selectByid(content.getCategoryid());
@@ -61,4 +56,16 @@ public class ContentServiceImpl implements ContentService {
         result.setContent(content);
         return result;
     }
+    @Override
+    public void addContent(Content content){
+        content.setCreated("2019-04-07");
+        content.setUpdated("2019-04-05");
+        dao.insertUser(content);
+    };
+    @Override
+    public void UpdateContent(Content content) {
+        dao.updateUser(content);
+    }
+
+
 }

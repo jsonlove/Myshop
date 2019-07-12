@@ -1,8 +1,5 @@
 package com.xiecl.myShop.domain;
 
-import java.io.Serializable;
-import java.util.Date;
-
 public class TbUser extends BaseBean {
     private String username;
     private String password;

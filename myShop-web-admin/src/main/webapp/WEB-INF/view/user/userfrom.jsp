@@ -35,6 +35,7 @@
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <h5><i class="icon fa fa-ban"></i> ${result.message}</h5>
                         </div>
+                        <input type="hidden" class="form-control" name="id" id="inputId" placeholder="Email" value="${tbuser.id}">
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
 

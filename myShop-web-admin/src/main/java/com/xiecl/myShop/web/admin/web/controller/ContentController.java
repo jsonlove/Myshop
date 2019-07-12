@@ -2,7 +2,6 @@ package com.xiecl.myShop.web.admin.web.controller;
 
 import com.xiecl.myShop.commons.dto.ContentPage;
 import com.xiecl.myShop.commons.dto.ContentResult;
-import com.xiecl.myShop.commons.dto.UserPage;
 import com.xiecl.myShop.domain.Content;
 import com.xiecl.myShop.domain.ContentCategory;
 import com.xiecl.myShop.web.admin.service.ContentCategoryService;
@@ -11,12 +10,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +35,7 @@ public class ContentController {
    @RequestMapping("/content_categorylist")
     public String content_categorylist(Model model){
        List<ContentCategory> list=contentCategoryService.selectContentCatogoryList();
-       List<ContentCategory> target=new ArrayList<ContentCategory>();
+       List<ContentCategory> target=new ArrayList();
        forCategory(list,target,0L);
        model.addAttribute("contentcate",target);
        return "content/content_categorylist";
@@ -69,7 +67,7 @@ public class ContentController {
         int draw = StringUtils.isBlank(strdraw)?0: Integer.parseInt(strdraw);
         int start = StringUtils.isBlank(strstart)?0: Integer.parseInt(strstart);
         int length = StringUtils.isBlank(strlength)?0: Integer.parseInt(strlength);
-        ContentPage page=new ContentPage();
+        ContentPage page;
         if(StringUtils.isBlank(serachValue)) {
             page = contentService.gotoPage(start, length);
         }else{
@@ -127,8 +125,22 @@ public class ContentController {
         if(StringUtils.isBlank(id)){
             id="0";
         }
-        List<ContentCategory> contentCategories = contentCategoryService.selectContentCatogoryByid(id);
-        return  contentCategories;
+        return  contentCategoryService.selectContentCatogoryByid(id);
+    }
+    /**增加或编辑内容
+     *
+     */
+    @RequestMapping(value = "/saveContent")
+    public  String saveContent(Content content){
+        //id为空 添加
+        if(StringUtils.isBlank(content.getId())){
+            contentService.addContent(content);
+        }
+        //有ID 编辑
+        else{
+
+        }
+        return "redirect:/content/contentlist";
     }
 
 }

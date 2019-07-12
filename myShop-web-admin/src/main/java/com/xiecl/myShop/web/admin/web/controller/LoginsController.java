@@ -5,6 +5,7 @@ import com.xiecl.myShop.web.admin.service.TbUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.xiecl.myShop.commons.constans.ConstansUtil;
@@ -24,7 +25,7 @@ public class LoginsController {
     }
 
 
-    @RequestMapping(value = "login",method = RequestMethod.POST)
+    @PostMapping("/login")
     public String loginPost(String email, String password, String isRemember, HttpServletRequest request, Model model){
         TbUser user=new TbUser();
         user.setEmail(email);
@@ -44,7 +45,6 @@ public class LoginsController {
     public String loginOut(HttpServletRequest request){
         if(request.getSession().getAttribute(ConstansUtil.SESSION_USER)!=null){
             request.getSession().removeAttribute(ConstansUtil.SESSION_USER);
-            System.out.println("======================");
         }
         return "/login";
     }

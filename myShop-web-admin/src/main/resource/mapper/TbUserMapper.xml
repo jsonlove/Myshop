@@ -15,7 +15,7 @@
           <include refid="tbuserColumn"></include>
         FROM tb_user AS tbuser
     </select>
-    <select id="selectUserByid" resultType="TbUser">
+    <select id="selectByid" resultType="TbUser">
         SELECT
         <include refid="tbuserColumn"></include>
         FROM tb_user AS tbuser

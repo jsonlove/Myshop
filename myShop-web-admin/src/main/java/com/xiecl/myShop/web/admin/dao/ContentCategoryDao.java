@@ -1,17 +1,15 @@
 package com.xiecl.myShop.web.admin.dao;
 
+import com.xiecl.myShop.commons.preperis.BaseDao;
 import com.xiecl.myShop.domain.ContentCategory;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigInteger;
 import java.util.List;
-import java.util.Map;
 
 @Repository
-public interface ContentCategoryDao {
-    List<ContentCategory> selectContentCatogoryList();
+public interface ContentCategoryDao extends BaseDao<ContentCategory> {
     @Select("select content.id,\n" +
             "            content.parent_id as parentid,\n" +
             "            content.name,\n" +

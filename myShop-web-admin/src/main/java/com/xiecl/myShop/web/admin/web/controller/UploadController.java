@@ -1,10 +1,8 @@
 package com.xiecl.myShop.web.admin.web.controller;
 
 import com.xiecl.myShop.commons.constans.ConstansUtil;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +15,7 @@ import java.util.UUID;
 
 @Controller
 public class UploadController {
-
+    private static final String UPLOAD_PATH = "/static/img/";
     @RequestMapping("/upload")
     @ResponseBody
     public Map<String,Object> upload( MultipartFile dropfile, HttpServletRequest request){
@@ -29,7 +27,7 @@ public class UploadController {
         //获得项目根路径
         //String filePath = request.getSession().getServletContext().getRealPath("/static/upload");
         //获取文件后缀
-        String filesuffix=filename.substring(filename.lastIndexOf("."));
+        String filesuffix=filename.substring(filename.lastIndexOf('.'));
         //生成储存文件夹对象
         File file=new File(path);
         //判断文件夹存在
@@ -38,14 +36,17 @@ public class UploadController {
         }
         //为文件生成独立文件名
         file=new File(path, UUID.randomUUID()+filesuffix);
-        String path11 = file.getPath();
         try {
             //写入文件
             dropfile.transferTo(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        // 返回文件完整路径
+       String serverPath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        serverPath += request.getContextPath();
+        String filepath=serverPath + UPLOAD_PATH + file.getName();
+        map.put("filename",filepath);
 
         return map;
     }

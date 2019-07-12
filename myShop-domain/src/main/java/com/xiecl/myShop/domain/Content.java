@@ -1,6 +1,6 @@
 package com.xiecl.myShop.domain;
 
-public class Content extends BaseBean{
+public class Content extends BaseBean {
         private String categoryid ;
         private String 	title ;
         private String 	subtitle ;

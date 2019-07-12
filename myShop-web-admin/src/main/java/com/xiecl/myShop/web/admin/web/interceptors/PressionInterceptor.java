@@ -13,7 +13,7 @@ public class PressionInterceptor implements HandlerInterceptor {
         return true;
     }
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-      if(modelAndView==null)return;
+      if(modelAndView==null){return;}
         if(modelAndView.getViewName().endsWith("login")){
           TbUser user= (TbUser) httpServletRequest.getSession().getAttribute(ConstansUtil.SESSION_USER);
           if(user!=null){

@@ -1,8 +1,9 @@
 package com.xiecl.myShop.web.admin.service.impl;
 
-import com.xiecl.myShop.commons.dto.BaseResult;
 import com.xiecl.myShop.commons.dto.UserPage;
+import com.xiecl.myShop.web.admin.abstracts.BaseServiceImpl;
 import com.xiecl.myShop.commons.util.DateUtil;
+import com.xiecl.myShop.domain.BaseBean;
 import com.xiecl.myShop.domain.TbUser;
 import com.xiecl.myShop.web.admin.dao.TbUserDao;
 import com.xiecl.myShop.web.admin.service.TbUserService;
@@ -17,41 +18,28 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class TbUserServiceImpl implements TbUserService {
+public class TbUserServiceImpl extends BaseServiceImpl<TbUser,TbUserDao> implements TbUserService {
     @Autowired
     private TbUserDao tbuserDao;
-    @Override
-    public List<TbUser> selectAll() {
-        List<TbUser> list=tbuserDao.selectAll();
-       return list;
-    }
 
     @Override
-    public BaseResult saveUser(TbUser user) {
-        BaseResult result=checkUser(user);
-        if(result.getStatus()==200) {
-            if(null == user.getId()){
+    public void saveUser(TbUser user) {
+            if(StringUtils.isBlank(user.getId())){
                 user.setCreated(DateUtil.dateToStrFormat(new Date()));
                 user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
                 user.setUpdated(DateUtil.dateToStrFormat(new Date()));
                 tbuserDao.insertUser(user);
             }
             else{
+                user.setUpdated(DateUtil.dateToStrFormat(new Date()));
                 tbuserDao.updateUser(user);
             }
-        }
-        return result;
-    }
-
-    @Override
-    public void updateUser(TbUser user) {
-        tbuserDao.updateUser(user);
     }
 
     @Override
     public TbUser selectUserByid(TbUser user) {
-        TbUser tbUser=tbuserDao.selectUserByid(user);
-        return tbUser;
+        BaseBean baseBean = tbuserDao.selectByid(user);
+        return (TbUser)baseBean;
     }
 
     @Override
@@ -68,21 +56,6 @@ public class TbUserServiceImpl implements TbUserService {
             return null;
         }
 
-    }
-    public BaseResult checkUser(TbUser user){
-        if(StringUtils.isBlank(user.getEmail())){
-            return BaseResult.fail("邮箱不能为空");
-        }
-        else if(StringUtils.isBlank(user.getPassword())){
-            return BaseResult.fail("密码不能为空");
-        }
-        else if(StringUtils.isBlank(user.getUsername())){
-            return BaseResult.fail("姓名不能为空");
-        }
-        else if(StringUtils.isBlank(user.getPhone())){
-            return BaseResult.fail("手机号不能为空");
-        }
-        return BaseResult.success();
     }
 
     public UserPage gotoPage(int start, int length){

@@ -2,7 +2,7 @@ package com.xiecl.myShop.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ContentCategory extends BaseBean{
+public class ContentCategory extends BaseBean {
         private String parentid ;
         private String 	name ;
         private String 	status ;

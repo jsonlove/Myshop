@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="myShop-extemal:war">
+    <output-path>$PROJECT_DIR$/myShop-extemal/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>myShop-extemal</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="myShop-extemal-1.0.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="myShop-extemal:war exploded" />
+    </root>
+  </artifact>
+</component>

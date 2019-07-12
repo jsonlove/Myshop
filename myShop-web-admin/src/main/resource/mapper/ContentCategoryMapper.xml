@@ -11,7 +11,7 @@
             content.created,
             content.updated
     </sql>
-    <select id="selectContentCatogoryList" resultType="ContentCategory">
+    <select id="selectAll" resultType="ContentCategory">
         SELECT
         <include refid="contentcategorycolumns"></include>
         FROM
@@ -23,7 +23,7 @@
         SELECT
         <include refid="contentcategorycolumns"></include>
         FROM
-        tb_content_category AS content
+        tb_content_category AS contents
         WHERE content.id=#{id}
     </select>
 </mapper>

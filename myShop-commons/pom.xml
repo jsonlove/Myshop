@@ -16,6 +16,27 @@
     <description></description>
 
         <dependencies>
+            <!--email-->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-email</artifactId>
+            </dependency>
+
+            <!-- Apache Http Begin -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>fluent-hc</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpmime</artifactId>
+            </dependency>
+            <!-- Apache Http End -->
+
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
@@ -54,12 +75,11 @@
                 <groupId>com.xiecl.myShop</groupId>
                 <artifactId>myShop-domain</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
-                <scope>compile</scope>
             </dependency>
             <dependency>
-                <groupId>com.xiecl.myShop</groupId>
-                <artifactId>myShop-domain</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>5.1.5.RELEASE</version>
                 <scope>compile</scope>
             </dependency>
         </dependencies>

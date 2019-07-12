@@ -1,7 +1,6 @@
 package com.xiecl.myShop.domain;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public abstract class BaseBean implements Serializable {
     private String id;

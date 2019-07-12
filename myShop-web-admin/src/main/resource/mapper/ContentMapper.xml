@@ -15,7 +15,7 @@
             ct.updated
     </sql>
 
-    <select id="selectCotentLimit" resultType="Content" parameterType="java.util.Map">
+    <select id="selectLimit" resultType="Content" parameterType="java.util.Map">
           SELECT
             <include refid="contentcolumn"></include>
             FROM
@@ -46,4 +46,31 @@
 	tb_content AS ct
 	WHERE ct.id=#{countid}
     </select>
+
+    <insert id="insertUser">
+        INSERT INTO `myshop`.`tb_content`
+	(
+	`category_id`,
+	`title`,
+	`sub_title`,
+	`title_desc`,
+	`url`,
+	`pic`,
+	`content`,
+	`created`,
+	`updated`
+	)
+	VALUES
+	(
+	#{categoryid},
+	#{title},
+	#{subtitle},
+	#{titledesc},
+	#{url},
+	#{pic},
+	#{content},
+	#{created},
+	#{updated}
+	);
+    </insert>
 </mapper>

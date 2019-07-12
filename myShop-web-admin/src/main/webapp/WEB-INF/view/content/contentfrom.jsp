@@ -35,7 +35,7 @@
                                 </h3>
                             </div>
                             <!-- form start -->
-                            <form class="form-horizontal" action="#" method="post">
+                            <form class="form-horizontal" action="<%=request.getContextPath()%>/content/saveContent" method="post">
                                 <div class="box-body">
                                     <div class="alert ${result.status==500?"alert-danger":"alert-success"} alert-dismissible" >
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -46,7 +46,7 @@
 
                                         <div class="col-sm-10">
                                             <ul id="myTree" class="ztree"></ul>
-                                            <input type="text" name="category_id" hidden="hidden" value="${contentfrom.content.categoryid}">
+                                            <input type="text" name="categoryid" hidden="hidden" value="${contentfrom.content.categoryid}">
                                             <input type="text" class="form-control" name="category_name" id="inputcategory" disabled="disabled" placeholder="分类" value="${contentfrom.category.name}">
                                         </div>
                                     </div>
@@ -60,14 +60,14 @@
                                     <div class="form-group">
                                         <label for="sub_title" class="col-sm-2 control-label">子标题</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="sub_title"  placeholder="子标题" value="${contentfrom.content.subtitle}">
+                                            <input type="text" class="form-control" name="subtitle"  placeholder="子标题" value="${contentfrom.content.subtitle}">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputEmail3" class="col-sm-2 control-label">标题描述</label>
 
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="title_desc"  placeholder="标题描述"  value="${contentfrom.content.titledesc}">
+                                            <input type="text" class="form-control" name="titledesc"  placeholder="标题描述"  value="${contentfrom.content.titledesc}">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -80,6 +80,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="inputEmail3" class="col-sm-2 control-label">图片</label>
+                                        <input type="hidden" id="pic" class="form-control" name="pic"  placeholder="图片链接"  value="${contentfrom.content.pic}">
                                         <div class="col-sm-10">
                                             <%--<input type="text" class="form-control" name="pic"  placeholder="图片"  value="${contentfrom.content.pic}">--%>
                                             <div id="dropz" class="dropzone"></div>
@@ -132,7 +133,8 @@
     $.fn.zTree.init($("#myTree"),setting);
     function onMouseDown(event, treeId, treeNode) {
         $("#inputcategory").val(treeNode.name);
-        $("input[name='category_id']").val(treeNode.id);
+        alert("id="+treeNode.id);
+        $("input[name='categoryid']").val(treeNode.id);
     }
     Dropzone.autoDiscover = false;
     $("#dropz").dropzone({
@@ -143,6 +145,7 @@
         init: function () {
             this.on("success", function (file, data) {
                 // 上传成功触发的事件
+                $("#pic").val(data.filename);
                 alert("上传成功");
             });
         }
